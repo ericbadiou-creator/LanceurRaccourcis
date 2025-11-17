@@ -1,0 +1,26 @@
+[
+  {
+    "Index": 1,
+    "SourcePath": "C:\\TEMP\\test_copie_origine",
+    "DestinationPath": "C:\\TEMP\\test_copie_fin",
+    "DayInterval": 0,
+    "HourInterval": 0,
+    "MinuteInterval": 0,
+    "ActionType": "COPIE",
+    "AddDateToDestination": false,
+    "AddTimeToDestination": false,
+    "LastBackupDate": "2025-11-14T17:20:29.3216537+01:00"
+  },
+  {
+    "Index": 2,
+    "SourcePath": "C:\\__Perso__\\lancerkelio.bat",
+    "DestinationPath": "",
+    "DayInterval": 0,
+    "HourInterval": 0,
+    "MinuteInterval": 0,
+    "ActionType": "EXECUTER",
+    "AddDateToDestination": false,
+    "AddTimeToDestination": false,
+    "LastBackupDate": "2025-11-14T17:20:29.3456074+01:00"
+  }
+]

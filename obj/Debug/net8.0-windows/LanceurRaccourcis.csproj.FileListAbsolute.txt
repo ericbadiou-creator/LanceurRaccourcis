@@ -1,0 +1,6 @@
+U:\user\ERB\LanceurRaccourcis\obj\Debug\net8.0-windows\LanceurRaccourcis.Properties.Resources.resources
+U:\user\ERB\LanceurRaccourcis\obj\Debug\net8.0-windows\LanceurRaccourcis.csproj.GenerateResource.cache
+U:\user\ERB\LanceurRaccourcis\obj\Debug\net8.0-windows\LanceurRaccourcis.GeneratedMSBuildEditorConfig.editorconfig
+U:\user\ERB\LanceurRaccourcis\obj\Debug\net8.0-windows\LanceurRaccourcis.AssemblyInfoInputs.cache
+U:\user\ERB\LanceurRaccourcis\obj\Debug\net8.0-windows\LanceurRaccourcis.AssemblyInfo.cs
+U:\user\ERB\LanceurRaccourcis\obj\Debug\net8.0-windows\LanceurRaccourcis.csproj.CoreCompileInputs.cache

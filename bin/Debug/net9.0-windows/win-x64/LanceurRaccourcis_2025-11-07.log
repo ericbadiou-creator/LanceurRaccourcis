@@ -1,0 +1,267 @@
+[2025-11-07 18:37:32] === Démarrage de l'application LanceurRaccourcis ===
+[2025-11-07 18:37:32] Initialisation de TrayApplicationContext
+[2025-11-07 18:37:32] Chargement de la configuration
+[2025-11-07 18:37:33] Chemin des raccourcis chargé: C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 18:37:33] Début du montage automatique des lecteurs réseau
+[2025-11-07 18:37:33] Chargement de 17 lecteur(s) réseau depuis la configuration
+[2025-11-07 18:37:33] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:33] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:33] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:33] Lecteur E: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:33] Lecteur H: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:33] Lecteur J: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:34] Lecteur K: déjà monté
+[2025-11-07 18:37:35] Lecteur L: déjà monté
+[2025-11-07 18:37:35] Lecteur M: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:35] Lecteur T: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Lecteur U: déjà monté
+[2025-11-07 18:37:36] Lecteur W: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Lecteur X: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Lecteur Y: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 18:37:36] Montage automatique terminé - 0 lecteur(s) monté(s)
+[2025-11-07 18:37:36] Construction du menu contextuel
+[2025-11-07 18:37:36] Ajout des element de C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 18:37:37] Ajout de 2 elements
+[2025-11-07 18:37:37] Ajout de 7 elements
+[2025-11-07 18:37:37] Ajout de 11 elements
+[2025-11-07 18:37:37] Ajout de 3 elements
+[2025-11-07 18:37:37] Ajout de 7 elements
+[2025-11-07 18:37:37] Ajout de 8 elements
+[2025-11-07 18:37:37] Ajout de 6 elements
+[2025-11-07 18:37:38] Ajout de 4 elements
+[2025-11-07 18:37:38] Ajout de 5 elements
+[2025-11-07 18:37:38] Ajout de 4 elements
+[2025-11-07 18:37:38] Ajout de 2 elements
+[2025-11-07 18:37:38] Ajout de 2 elements
+[2025-11-07 18:37:38] Ajout de séparateur
+[2025-11-07 18:37:38] Configuration du FileSystemWatcher
+[2025-11-07 18:37:38] FileSystemWatcher activé
+[2025-11-07 19:17:46] === Démarrage de l'application LanceurRaccourcis ===
+[2025-11-07 19:17:46] Initialisation de TrayApplicationContext
+[2025-11-07 19:17:46] Chargement de la configuration
+[2025-11-07 19:17:46] Chemin des raccourcis chargé: C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 19:17:46] Début du montage automatique des lecteurs réseau
+[2025-11-07 19:17:46] Chargement de 17 lecteur(s) réseau depuis la configuration
+[2025-11-07 19:17:46] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:46] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:46] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:46] Lecteur E: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:46] Lecteur H: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:46] Lecteur J: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:49] Lecteur K: déjà monté
+[2025-11-07 19:17:49] Lecteur L: déjà monté
+[2025-11-07 19:17:49] Lecteur M: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:49] Lecteur T: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Lecteur U: déjà monté
+[2025-11-07 19:17:50] Lecteur W: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Lecteur X: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Lecteur Y: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:17:50] Montage automatique terminé - 0 lecteur(s) monté(s)
+[2025-11-07 19:17:51] Construction du menu contextuel
+[2025-11-07 19:17:51] Ajout des element de C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 19:17:51] Ajout de 2 elements
+[2025-11-07 19:17:51] Ajout de 7 elements
+[2025-11-07 19:17:51] Ajout de 11 elements
+[2025-11-07 19:17:51] Ajout de 3 elements
+[2025-11-07 19:17:51] Ajout de 7 elements
+[2025-11-07 19:17:51] Ajout de 8 elements
+[2025-11-07 19:17:51] Ajout de 6 elements
+[2025-11-07 19:17:51] Ajout de 4 elements
+[2025-11-07 19:17:51] Ajout de 5 elements
+[2025-11-07 19:17:51] Ajout de 4 elements
+[2025-11-07 19:17:51] Ajout de 2 elements
+[2025-11-07 19:17:52] Ajout de 2 elements
+[2025-11-07 19:17:52] Ajout de séparateur
+[2025-11-07 19:17:52] Configuration du FileSystemWatcher
+[2025-11-07 19:17:52] FileSystemWatcher activé
+[2025-11-07 19:17:54] MouseClick R: Affichage immédiat du menu contextuel.
+[2025-11-07 19:17:57] Ouverture de l'outil de sauvegarde
+[2025-11-07 19:27:01] MouseClick R: Affichage immédiat du menu contextuel.
+[2025-11-07 19:27:02] Fermeture de l'application demandée
+[2025-11-07 19:27:02] === Arrêt de l'application ===
+[2025-11-07 19:44:31] === Démarrage de l'application LanceurRaccourcis ===
+[2025-11-07 19:44:31] Initialisation de TrayApplicationContext
+[2025-11-07 19:44:31] Chargement de la configuration
+[2025-11-07 19:44:31] Chemin des raccourcis chargé: C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 19:44:31] Début du montage automatique des lecteurs réseau
+[2025-11-07 19:44:31] Chargement de 17 lecteur(s) réseau depuis la configuration
+[2025-11-07 19:44:31] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:31] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:31] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:31] Lecteur E: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:31] Lecteur H: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:31] Lecteur J: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:33] Lecteur K: déjà monté
+[2025-11-07 19:44:34] Lecteur L: déjà monté
+[2025-11-07 19:44:34] Lecteur M: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:34] Lecteur T: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Lecteur U: déjà monté
+[2025-11-07 19:44:37] Lecteur W: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Lecteur X: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Lecteur Y: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:44:37] Montage automatique terminé - 0 lecteur(s) monté(s)
+[2025-11-07 19:44:37] Construction du menu contextuel
+[2025-11-07 19:44:37] Ajout des element de C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 19:44:37] Ajout de 2 elements
+[2025-11-07 19:44:39] Ajout de 7 elements
+[2025-11-07 19:44:39] Ajout de 11 elements
+[2025-11-07 19:44:39] Ajout de 3 elements
+[2025-11-07 19:44:39] Ajout de 7 elements
+[2025-11-07 19:44:39] Ajout de 8 elements
+[2025-11-07 19:44:40] Ajout de 6 elements
+[2025-11-07 19:44:40] Ajout de 4 elements
+[2025-11-07 19:44:40] Ajout de 5 elements
+[2025-11-07 19:44:40] Ajout de 4 elements
+[2025-11-07 19:44:41] Ajout de 2 elements
+[2025-11-07 19:44:41] Ajout de 2 elements
+[2025-11-07 19:44:41] Ajout de séparateur
+[2025-11-07 19:44:41] Configuration du FileSystemWatcher
+[2025-11-07 19:44:41] FileSystemWatcher activé
+[2025-11-07 19:44:42] MouseClick R: Affichage immédiat du menu contextuel.
+[2025-11-07 19:44:44] Ouverture de l'outil de sauvegarde
+[2025-11-07 19:48:27] === Démarrage de l'application LanceurRaccourcis ===
+[2025-11-07 19:48:27] Initialisation de TrayApplicationContext
+[2025-11-07 19:48:27] Chargement de la configuration
+[2025-11-07 19:48:27] Chemin des raccourcis chargé: C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 19:48:27] Début du montage automatique des lecteurs réseau
+[2025-11-07 19:48:27] Chargement de 17 lecteur(s) réseau depuis la configuration
+[2025-11-07 19:48:27] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:27] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:27] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:27] Lecteur E: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:27] Lecteur H: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:27] Lecteur J: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:29] Lecteur K: déjà monté
+[2025-11-07 19:48:30] Lecteur L: déjà monté
+[2025-11-07 19:48:30] Lecteur M: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:30] Lecteur T: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Lecteur U: déjà monté
+[2025-11-07 19:48:31] Lecteur W: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Lecteur X: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Lecteur Y: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 19:48:31] Montage automatique terminé - 0 lecteur(s) monté(s)
+[2025-11-07 19:48:31] Construction du menu contextuel
+[2025-11-07 19:48:31] Ajout des element de C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 19:48:31] Ajout de 2 elements
+[2025-11-07 19:48:31] Ajout de 7 elements
+[2025-11-07 19:48:32] Ajout de 11 elements
+[2025-11-07 19:48:32] Ajout de 3 elements
+[2025-11-07 19:48:32] Ajout de 7 elements
+[2025-11-07 19:48:32] Ajout de 8 elements
+[2025-11-07 19:48:32] Ajout de 6 elements
+[2025-11-07 19:48:32] Ajout de 4 elements
+[2025-11-07 19:48:32] Ajout de 5 elements
+[2025-11-07 19:48:32] Ajout de 4 elements
+[2025-11-07 19:48:32] Ajout de 2 elements
+[2025-11-07 19:48:32] Ajout de 2 elements
+[2025-11-07 19:48:32] Ajout de séparateur
+[2025-11-07 19:48:32] Configuration du FileSystemWatcher
+[2025-11-07 19:48:32] FileSystemWatcher activé
+[2025-11-07 19:48:33] MouseClick R: Affichage immédiat du menu contextuel.
+[2025-11-07 19:48:35] Ouverture de l'outil de sauvegarde
+[2025-11-07 21:32:19] === Démarrage de l'application LanceurRaccourcis ===
+[2025-11-07 21:32:19] Initialisation de TrayApplicationContext
+[2025-11-07 21:32:19] Chargement de la configuration
+[2025-11-07 21:32:19] Chemin des raccourcis chargé: C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 21:32:19] Début du montage automatique des lecteurs réseau
+[2025-11-07 21:32:19] Chargement de 17 lecteur(s) réseau depuis la configuration
+[2025-11-07 21:32:19] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:19] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:19] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:19] Lecteur E: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:19] Lecteur H: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:19] Lecteur J: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:22] Lecteur K: déjà monté
+[2025-11-07 21:32:23] Lecteur L: déjà monté
+[2025-11-07 21:32:23] Lecteur M: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:23] Lecteur T: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Lecteur U: déjà monté
+[2025-11-07 21:32:24] Lecteur W: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Lecteur X: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Lecteur Y: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:32:24] Montage automatique terminé - 0 lecteur(s) monté(s)
+[2025-11-07 21:32:24] Construction du menu contextuel
+[2025-11-07 21:32:24] Ajout des element de C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 21:32:24] Ajout de 2 elements
+[2025-11-07 21:32:24] Ajout de 7 elements
+[2025-11-07 21:32:24] Ajout de 11 elements
+[2025-11-07 21:32:24] Ajout de 3 elements
+[2025-11-07 21:32:24] Ajout de 7 elements
+[2025-11-07 21:32:24] Ajout de 8 elements
+[2025-11-07 21:32:24] Ajout de 6 elements
+[2025-11-07 21:32:24] Ajout de 4 elements
+[2025-11-07 21:32:25] Ajout de 5 elements
+[2025-11-07 21:32:25] Ajout de 4 elements
+[2025-11-07 21:32:25] Ajout de 2 elements
+[2025-11-07 21:32:25] Ajout de 2 elements
+[2025-11-07 21:32:25] Ajout de séparateur
+[2025-11-07 21:32:25] Configuration du FileSystemWatcher
+[2025-11-07 21:32:25] FileSystemWatcher activé
+[2025-11-07 21:32:25] MouseClick R: Affichage immédiat du menu contextuel.
+[2025-11-07 21:32:27] Ouverture de l'outil de sauvegarde
+[2025-11-07 21:42:59] === Démarrage de l'application LanceurRaccourcis ===
+[2025-11-07 21:42:59] Initialisation de TrayApplicationContext
+[2025-11-07 21:42:59] Chargement de la configuration
+[2025-11-07 21:43:00] Chemin des raccourcis chargé: C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 21:43:00] Début du montage automatique des lecteurs réseau
+[2025-11-07 21:43:00] Chargement de 17 lecteur(s) réseau depuis la configuration
+[2025-11-07 21:43:00] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:00] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:00] Lecteur B: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:00] Lecteur E: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:00] Lecteur H: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:00] Lecteur J: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:02] Lecteur K: déjà monté
+[2025-11-07 21:43:03] Lecteur L: déjà monté
+[2025-11-07 21:43:03] Lecteur M: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:03] Lecteur T: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Lecteur U: déjà monté
+[2025-11-07 21:43:04] Lecteur W: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Lecteur X: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Lecteur Y: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Lecteur Z: - ignoré (LancerDemarrage = false)
+[2025-11-07 21:43:04] Montage automatique terminé - 0 lecteur(s) monté(s)
+[2025-11-07 21:43:04] Construction du menu contextuel
+[2025-11-07 21:43:04] Ajout des element de C:\Users\ebadiou\OneDrive - SAVOYE\Documents\__PERSO__\____Raccourci____
+[2025-11-07 21:43:04] Ajout de 2 elements
+[2025-11-07 21:43:04] Ajout de 7 elements
+[2025-11-07 21:43:04] Ajout de 11 elements
+[2025-11-07 21:43:04] Ajout de 3 elements
+[2025-11-07 21:43:04] Ajout de 7 elements
+[2025-11-07 21:43:04] Ajout de 8 elements
+[2025-11-07 21:43:05] Ajout de 6 elements
+[2025-11-07 21:43:05] Ajout de 4 elements
+[2025-11-07 21:43:05] Ajout de 5 elements
+[2025-11-07 21:43:05] Ajout de 4 elements
+[2025-11-07 21:43:05] Ajout de 2 elements
+[2025-11-07 21:43:05] Ajout de 2 elements
+[2025-11-07 21:43:05] Ajout de séparateur
+[2025-11-07 21:43:05] Configuration du FileSystemWatcher
+[2025-11-07 21:43:05] FileSystemWatcher activé
+[2025-11-07 21:43:06] MouseClick L: Démarrage de l'attente du simple clic.
+[2025-11-07 21:43:07] Tick Timer: Le minuteur a expiré.
+[2025-11-07 21:43:07] Tick Timer: pendingTrayMenuOnLeftClick est TRUE. Exécution du simple clic (ShowConfiguration).
+[2025-11-07 21:43:07] Ouverture de la fenêtre de configuration
+[2025-11-07 21:43:08] MouseClick L: Démarrage de l'attente du simple clic.
+[2025-11-07 21:43:08] Tick Timer: Le minuteur a expiré.
+[2025-11-07 21:43:08] Tick Timer: pendingTrayMenuOnLeftClick est TRUE. Exécution du simple clic (ShowConfiguration).
+[2025-11-07 21:43:08] Ouverture de la fenêtre de configuration
+[2025-11-07 21:43:10] MouseClick R: Affichage immédiat du menu contextuel.
+[2025-11-07 21:43:11] Ouverture de l'outil de sauvegarde
