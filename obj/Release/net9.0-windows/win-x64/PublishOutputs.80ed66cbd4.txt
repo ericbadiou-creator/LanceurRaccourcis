@@ -1,3 +1,0 @@
-C:\__Perso__\Mes Programmes\LanceurRaccourcis\exe\LanceurRaccourcis.pdb
-C:\__Perso__\Mes Programmes\LanceurRaccourcis\exe\LanceurRaccourcis.dll.config
-C:\__Perso__\Mes Programmes\LanceurRaccourcis\exe\LanceurRaccourcis.exe

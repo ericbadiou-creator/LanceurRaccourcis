@@ -1,3 +1,0 @@
-U:\user\ERB\LanceurRaccourcis\exe\LanceurRaccourcis.pdb
-U:\user\ERB\LanceurRaccourcis\exe\LanceurRaccourcis.dll.config
-U:\user\ERB\LanceurRaccourcis\exe\LanceurRaccourcis.exe
