@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Runtime.Versioning;
+using System.Threading;
 
 namespace LanceurRaccourcis
 {
@@ -90,9 +91,12 @@ namespace LanceurRaccourcis
         {
             try
             {
+                // Récupérer l'ID du thread actuel
+                int threadId = Thread.CurrentThread.ManagedThreadId;
+
                 lock (lockObj)
                 {
-                    string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
+                    string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [Thread: {threadId}] {message}";
                     File.AppendAllText(GetTodayLogPath(), logEntry + Environment.NewLine);
                 }
             }

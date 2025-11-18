@@ -11,6 +11,7 @@ using System.Linq;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.Management;
+using System.Threading.Tasks;
 
 namespace LanceurRaccourcis
 {
@@ -64,7 +65,7 @@ namespace LanceurRaccourcis
             }
 
             // Monter automatiquement les lecteurs réseau
-            MountStartupNetworkDrives();
+            _ = Task.Run(() => MountStartupNetworkDrives());
 
             // Créer l'icône dans la barre des tâches
             try
@@ -625,7 +626,7 @@ namespace LanceurRaccourcis
 
         private void MountStartupNetworkDrives()
         {
-            Logger.Log("Début du montage automatique des lecteurs réseau");
+            Logger.Log("Début du montage automatique des lecteurs réseau (parallèle)");
             try
             {
                 var networkDrivesConfig = LoadNetworkDrivesConfig();
@@ -633,14 +634,17 @@ namespace LanceurRaccourcis
                 if (networkDrivesConfig == null || networkDrivesConfig.Count == 0)
                     return;
 
-                int mountedCount = 0;
-                foreach (var config in networkDrivesConfig)
+                // Utiliser un compteur atomique (Interlocked) car il sera modifié par plusieurs threads
+                int mountedCount = 0; 
+                
+                // --- 💡 CHANGEMENT ICI : Utilisation de Parallel.ForEach ---
+                System.Threading.Tasks.Parallel.ForEach(networkDrivesConfig, config =>
                 {
                     // Vérifier si le lecteur doit être monté au démarrage
                     if (!config.LancerDemarrage)
                     {
                         Logger.Log($"Lecteur {config.DriveLetter} - ignoré (LancerDemarrage = false)");
-                        continue;
+                        return; // Equivalent à continue dans un foreach normal
                     }
 
                     string driveLetter = config.DriveLetter ?? "";
@@ -651,24 +655,26 @@ namespace LanceurRaccourcis
                     if (string.IsNullOrEmpty(driveLetter) || string.IsNullOrEmpty(networkPath))
                     {
                         Logger.Log($"Lecteur ignoré - informations manquantes (Lettre: {driveLetter}, Path: {networkPath})");
-                        continue;
-                    }                    
+                        return;
+                    }
 
                     // Vérifier si le lecteur n'est pas déjà monté
                     if (IsDriveMounted(driveLetter))
                     {
                         Logger.Log($"Lecteur {driveLetter} déjà monté");
-                        continue;
+                        return;
                     }
 
                     Logger.Log($"Tentative de montage du lecteur {driveLetter} -> {networkPath}");
-                    // Monter le lecteur                    
+                    // Monter le lecteur                    
                     if (MountNetworkDrive(driveLetter, networkPath, username, password))
                     {
-                        mountedCount++;
+                        // Incrémentation sécurisée dans un contexte multithread
+                        System.Threading.Interlocked.Increment(ref mountedCount);
                         Logger.Log($"Lecteur {driveLetter} monté avec succès");
                     }
-                }
+                });
+                
                 Logger.Log($"Montage automatique terminé - {mountedCount} lecteur(s) monté(s)");
             }
             catch (Exception ex)

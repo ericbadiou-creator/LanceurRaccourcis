@@ -103,6 +103,7 @@ namespace LanceurRaccourcis
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "LastBackup", HeaderText = "Dernière maj", Width = 130, ReadOnly = true });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Date", HeaderText = "Date", Width = 80, ReadOnly = true });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Heure2", HeaderText = "Heure", Width = 80, ReadOnly = true });
+            dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Error", HeaderText = "Erreur", Width = 80, ReadOnly = true });
 
             // Événements
             dgvBackups.CellDoubleClick += OnCellDoubleClick;
@@ -183,7 +184,8 @@ namespace LanceurRaccourcis
                     entry.ActionType ?? "COPIE",
                     entry.LastBackupDate?.ToString("dd/MM/yyyy HH:mm:ss") ?? "",
                     entry.LastBackupDate?.ToString("dd/MM/yyyy") ?? "NON",
-                    entry.LastBackupDate?.ToString("HH:mm") ?? "NON"
+                    entry.LastBackupDate?.ToString("HH:mm") ?? "NON",
+                    entry.Error
                 );
             }
         }
@@ -369,8 +371,11 @@ namespace LanceurRaccourcis
             {
                 if (!File.Exists(entry.SourcePath) && !Directory.Exists(entry.SourcePath))
                 {
+                    entry.Error = true;
                     MessageBox.Show($"Le fichier source n'existe pas:\n{entry.SourcePath}",
                         "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SaveBackupConfiguration();
+                    RefreshGrid();
                     return;
                 }
 
@@ -493,6 +498,9 @@ namespace LanceurRaccourcis
             }
             catch (Exception ex)
             {
+                entry.Error = true;
+                SaveBackupConfiguration();
+                RefreshGrid();
                  Logger.LogError($"Erreur lors de la sauvegarde:\n{ex.Message}", ex);
                 if(showmessagebox)
                 {
@@ -552,7 +560,7 @@ namespace LanceurRaccourcis
             double totalIntervalMinutes = (entry.DayInterval * 24 * 60) + 
                         (entry.HourInterval * 60) + entry.MinuteInterval;
 
-            if (daysPassed < totalIntervalMinutes)
+            if (daysPassed < totalIntervalMinutes && entry.Error == true)
                 return false;
 
             return true;
@@ -648,6 +656,7 @@ namespace LanceurRaccourcis
         public bool AddDateToDestination { get; set; } = false;
         public bool AddTimeToDestination { get; set; } = false;
         public DateTime? LastBackupDate { get; set; }
+        public bool Error { get; set; } = false;
     }
 
     // Formulaire pour ajouter/éditer une entrée
@@ -879,6 +888,7 @@ namespace LanceurRaccourcis
             BackupEntry.AddDateToDestination = chkAddDateToDestination.Checked;
             BackupEntry.AddTimeToDestination = chkAddTimeToDestination.Checked;
             BackupEntry.Index = (int)numIndex.Value;
+            BackupEntry.Error = false;
         }
     }
 }
