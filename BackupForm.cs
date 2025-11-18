@@ -16,6 +16,7 @@ namespace LanceurRaccourcis
         private DataGridView dgvBackups = null!;
         private ToolStrip toolStrip = null!;
         private ToolStripButton btnAdd = null!;
+        private ToolStripButton btnModify = null!;
         private ToolStripButton btnDelete = null!;
         private ToolStripButton btnExecute = null!;
         private ToolStripButton btnManualSave = null!;
@@ -41,7 +42,7 @@ namespace LanceurRaccourcis
 
         private void InitializeComponent()
         {
-            this.Text = "Outil_sauvegarde_auto Version : 1.0.5.1";
+            this.Text = "Saveugarde automatique des fichiers";
             this.Size = new Size(1050, 450);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Icon = SystemIcons.Shield;
@@ -56,6 +57,8 @@ namespace LanceurRaccourcis
             // Boutons de la barre d'outils
             btnManualSave = CreateToolStripButton("💾", "Sauvegarde manuelle", OnManualSave);
             btnAdd = CreateToolStripButton("➕", "Ajouter", OnAdd);
+            btnModify = CreateToolStripButton("✏️", "Modifier", OnModify);
+            btnModify.Enabled = false; // Désactivé par défaut
             btnDelete = CreateToolStripButton("➖", "Supprimer", OnDelete);
             btnExecute = CreateToolStripButton("▶", "Exécuter", OnExecute);
             btnSettings = CreateToolStripButton("⚙", "Paramètres", OnSettings);
@@ -66,6 +69,7 @@ namespace LanceurRaccourcis
                 btnManualSave,
                 new ToolStripSeparator(),
                 btnAdd,
+                btnModify,
                 btnDelete,
                 new ToolStripSeparator(),
                 btnExecute,
@@ -102,12 +106,19 @@ namespace LanceurRaccourcis
 
             // Événements
             dgvBackups.CellDoubleClick += OnCellDoubleClick;
+            dgvBackups.SelectionChanged += DgvBackups_SelectionChanged;
 
             // Ajouter les contrôles au formulaire
             this.Controls.Add(dgvBackups);
             this.Controls.Add(toolStrip);
 
             this.FormClosing += BackupForm_FormClosing;
+        }
+
+        private void DgvBackups_SelectionChanged(object? sender, EventArgs e)
+        {
+            // Activer le bouton Modifier seulement si exactement une ligne est sélectionnée
+            btnModify.Enabled = dgvBackups.SelectedRows.Count == 1;
         }
 
         private ToolStripButton CreateToolStripButton(string text, string tooltip, EventHandler clickHandler)
@@ -211,6 +222,36 @@ namespace LanceurRaccourcis
                 if (addForm.ShowDialog() == DialogResult.OK)
                 {
                     backupEntries.Add(addForm.BackupEntry);
+                    RefreshGrid();
+                    SaveBackupConfiguration();
+                }
+            }
+        }
+
+        private void OnModify(object? sender, EventArgs e)
+        {
+            // Vérifier qu'exactement une ligne est sélectionnée
+            if (dgvBackups.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Veuillez sélectionner une seule entrée à modifier.",
+                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var row = dgvBackups.SelectedRows[0];
+            if (row.Cells["Index"].Value == null) return;
+
+            int displayIndex = (int)row.Cells["Index"].Value!;
+            int entryIndex = displayIndex - 1;
+
+            if (entryIndex < 0 || entryIndex >= backupEntries.Count) return;
+
+            var entry = backupEntries[entryIndex];
+            using (var editForm = new BackupEntryForm(entry))
+            {
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    backupEntries[entryIndex] = editForm.BackupEntry;
                     RefreshGrid();
                     SaveBackupConfiguration();
                 }
@@ -646,7 +687,7 @@ namespace LanceurRaccourcis
 
         private void InitializeComponent()
         {
-            this.Text = "Copie";
+            this.Text = "Configuration de la sauvegarde";
             this.Size = new Size(380, 520);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -737,6 +778,8 @@ namespace LanceurRaccourcis
             grpDuration.Top = isExecute ? positionGrpDest : positionGrpDest+tailleGrpDest;
             btnOk.Top = isExecute ? positionGrpDest+tailleGrpDuration : positionGrpDest+tailleGrpDest+tailleGrpDuration;
             btnCancel.Top = btnOk.Top;
+
+            this.Size = new Size(380, grpDuration.Bottom + 80);
 
             if (isExecute)
             {
