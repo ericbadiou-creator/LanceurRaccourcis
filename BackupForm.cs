@@ -6,7 +6,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Windows.Forms;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Runtime.Versioning;
+using System.Globalization;
 
 namespace LanceurRaccourcis
 {
@@ -21,13 +23,12 @@ namespace LanceurRaccourcis
         private ToolStripButton btnExecute = null!;
         private ToolStripButton btnManualSave = null!;
         private ToolStripButton btnSettings = null!;
-        private ToolStripButton btnSchedule = null!;
-        private ToolStripButton btnRestore = null!;
         private System.Windows.Forms.Timer? autoSaveTimer = null!;
 
         private const string BACKUP_CONFIG_FILE = "backup_config.json";
         private string configPath;
         private List<BackupEntry> backupEntries = new List<BackupEntry>();
+        private bool hasModifiedDates = false; // ✅ Indicateur de modifications
 
         public BackupForm()
         {
@@ -55,15 +56,15 @@ namespace LanceurRaccourcis
             };
 
             // Boutons de la barre d'outils
+            //btnManualSave = CreateToolStripButton("💾", "Sauvegarde manuelle", OnManualSave);
             btnManualSave = CreateToolStripButton("💾", "Sauvegarde manuelle", OnManualSave);
+            btnManualSave.Enabled = false; // ✅ Désactivé par défaut
             btnAdd = CreateToolStripButton("➕", "Ajouter", OnAdd);
             btnModify = CreateToolStripButton("✏️", "Modifier", OnModify);
             btnModify.Enabled = false; // Désactivé par défaut
             btnDelete = CreateToolStripButton("➖", "Supprimer", OnDelete);
             btnExecute = CreateToolStripButton("▶", "Exécuter", OnExecute);
             btnSettings = CreateToolStripButton("⚙", "Paramètres", OnSettings);
-            btnSchedule = CreateToolStripButton("🕐", "Planification", OnSchedule);
-            btnRestore = CreateToolStripButton("↶", "Restaurer", OnRestore);
 
             toolStrip.Items.AddRange(new ToolStripItem[] {
                 btnManualSave,
@@ -75,8 +76,6 @@ namespace LanceurRaccourcis
                 btnExecute,
                 new ToolStripSeparator(),
                 btnSettings,
-                btnSchedule,
-                btnRestore
             });
 
             // Créer le DataGridView
@@ -100,7 +99,7 @@ namespace LanceurRaccourcis
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Heure", HeaderText = "Heure", Width = 50, ReadOnly = true });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Minutes", HeaderText = "Minutes", Width = 60, ReadOnly = true });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Action", HeaderText = "Action", Width = 80, ReadOnly = true });
-            dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "LastBackup", HeaderText = "Dernière maj", Width = 130, ReadOnly = true });
+            dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "LastBackup", HeaderText = "Dernière maj", Width = 130, ReadOnly = false });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Date", HeaderText = "Date", Width = 80, ReadOnly = true });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Heure2", HeaderText = "Heure", Width = 80, ReadOnly = true });
             dgvBackups.Columns.Add(new DataGridViewTextBoxColumn { Name = "Error", HeaderText = "Erreur", Width = 80, ReadOnly = true });
@@ -108,6 +107,8 @@ namespace LanceurRaccourcis
             // Événements
             dgvBackups.CellDoubleClick += OnCellDoubleClick;
             dgvBackups.SelectionChanged += DgvBackups_SelectionChanged;
+            dgvBackups.CellValueChanged += DgvBackups_CellValueChanged;
+            dgvBackups.CellEndEdit += DgvBackups_CellEndEdit;
 
             // Ajouter les contrôles au formulaire
             this.Controls.Add(dgvBackups);
@@ -120,6 +121,87 @@ namespace LanceurRaccourcis
         {
             // Activer le bouton Modifier seulement si exactement une ligne est sélectionnée
             btnModify.Enabled = dgvBackups.SelectedRows.Count == 1;
+
+            // ✅ Le bouton Sauvegarde manuelle est actif si :
+            // - Il y a des dates modifiées OU
+            // - Il y a des lignes sélectionnées (pour exécuter les sauvegardes)
+            UpdateManualSaveButton();
+        }
+
+        // ✅ Nouvelle méthode pour mettre à jour l'état du bouton Sauvegarde manuelle
+        private void UpdateManualSaveButton()
+        {
+            // Le bouton est actif si il y a des dates modifiées OU des lignes sélectionnées
+            btnManualSave.Enabled = hasModifiedDates;
+            
+            // Changer la couleur du bouton pour indiquer qu'il y a des modifications en attente
+            if (hasModifiedDates)
+            {
+                btnManualSave.BackColor = Color.LightGreen;
+                btnManualSave.ToolTipText = "💾 Modifications en attente - Cliquez pour sauvegarder";
+            }
+            else
+            {
+                btnManualSave.BackColor = SystemColors.Control;
+                btnManualSave.ToolTipText = "Sauvegarde manuelle (met à jour les dates éditées)";
+            }
+        }
+
+        // ✅ Événement déclenché lorsqu'une cellule est éditée
+        private void DgvBackups_CellEndEdit(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+            
+            var columnName = dgvBackups.Columns[e.ColumnIndex].Name;
+            
+            // Si c'est la colonne "LastBackup" qui a été éditée
+            if (columnName == "LastBackup")
+            {
+                var cell = dgvBackups.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                var newValue = cell.Value?.ToString();
+                
+                if (string.IsNullOrWhiteSpace(newValue))
+                    return;
+                
+                // Essayer de parser la date
+                if (DateTime.TryParseExact(newValue, "dd/MM/yyyy HH:mm:ss", 
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+                {
+                    // Marquer la cellule comme modifiée (changement de couleur)
+                    cell.Style.BackColor = Color.LightYellow;
+                    hasModifiedDates = true; // ✅ Indiquer qu'il y a des modifications
+                    UpdateManualSaveButton(); // ✅ Mettre à jour l'état du bouton
+                }
+                else
+                {
+                    MessageBox.Show("Format de date invalide. Utilisez le format: dd/MM/yyyy HH:mm:ss\nExemple: 17/12/2025 14:30:00",
+                        "Format invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+                    // Restaurer la valeur d'origine
+                    var indexCell = dgvBackups.Rows[e.RowIndex].Cells["Index"];
+                    if (indexCell.Value != null)
+                    {
+                        int index = (int)indexCell.Value - 1;
+                        if (index >= 0 && index < backupEntries.Count)
+                        {
+                            cell.Value = backupEntries[index].LastBackupDate?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        }
+                    }
+                }
+            }
+        }
+
+        // ✅ Événement pour détecter les changements (optionnel, pour logging)
+        private void DgvBackups_CellValueChanged(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
+            
+            var columnName = dgvBackups.Columns[e.ColumnIndex].Name;
+            
+            if (columnName == "LastBackup")
+            {
+                Logger.Log($"Ligne {e.RowIndex + 1}: Date modifiée, en attente de sauvegarde.");
+            }
         }
 
         private ToolStripButton CreateToolStripButton(string text, string tooltip, EventHandler clickHandler)
@@ -183,8 +265,8 @@ namespace LanceurRaccourcis
                     entry.MinuteInterval,
                     entry.ActionType ?? "COPIE",
                     entry.LastBackupDate?.ToString("dd/MM/yyyy HH:mm:ss") ?? "",
-                    entry.LastBackupDate?.ToString("dd/MM/yyyy") ?? "NON",
-                    entry.LastBackupDate?.ToString("HH:mm") ?? "NON",
+                    entry.LastBackupDate?.ToString("dd/MM/yyyy") ?? "01/01/2000",
+                    entry.LastBackupDate?.ToString("HH:mm") ?? "00:00",
                     entry.Error
                 );
             }
@@ -192,24 +274,54 @@ namespace LanceurRaccourcis
 
         private void OnManualSave(object? sender, EventArgs e)
         {
-            if (dgvBackups.SelectedRows.Count == 0)
+            // 1️⃣ D'abord, sauvegarder toutes les dates modifiées dans le DataGridView
+            bool hasChanges = UpdateModifiedDates();
+            
+            if (hasChanges)
             {
-                MessageBox.Show("Veuillez sélectionner au moins une entrée à sauvegarder.",
-                    "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+                Logger.Log("📝 Dates modifiées sauvegardées dans le fichier de configuration.");
+            }            
+        }
 
-            foreach (DataGridViewRow row in dgvBackups.SelectedRows)
+        // ✅ Nouvelle méthode: met à jour les dates modifiées dans backupEntries et sauvegarde
+        private bool UpdateModifiedDates()
+        {
+            bool hasChanges = false;
+            
+            foreach (DataGridViewRow row in dgvBackups.Rows)
             {
-                if (row.Cells["Index"].Value != null)
+                var indexCell = row.Cells["Index"];
+                var lastBackupCell = row.Cells["LastBackup"];
+                
+                if (indexCell.Value == null || lastBackupCell.Style.BackColor != Color.LightYellow)
+                    continue;
+                
+                int index = (int)indexCell.Value - 1;
+                if (index < 0 || index >= backupEntries.Count)
+                    continue;
+                
+                string newDateStr = lastBackupCell.Value?.ToString() ?? "";
+                
+                if (DateTime.TryParseExact(newDateStr, "dd/MM/yyyy HH:mm:ss", 
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                 {
-                    int index = (int)row.Cells["Index"].Value! - 1;
-                    if (index >= 0 && index < backupEntries.Count)
-                    {
-                        ExecuteBackup(backupEntries[index], true);
-                    }
+                    backupEntries[index].LastBackupDate = parsedDate;
+                    lastBackupCell.Style.BackColor = Color.White; // Réinitialiser la couleur
+                    hasChanges = true;
+                    
+                    Logger.Log($"✅ Ligne {index + 1}: Date mise à jour → {parsedDate:dd/MM/yyyy HH:mm:ss}");
                 }
             }
+            
+            if (hasChanges)
+            {
+                SaveBackupConfiguration();
+                RefreshGrid();
+                hasModifiedDates = false; // ✅ Réinitialiser l'indicateur
+                UpdateManualSaveButton(); // ✅ Mettre à jour l'état du bouton
+            }
+            
+            return hasChanges;
         }
 
         private void OnAdd(object? sender, EventArgs e)
@@ -226,6 +338,7 @@ namespace LanceurRaccourcis
                     backupEntries.Add(addForm.BackupEntry);
                     RefreshGrid();
                     SaveBackupConfiguration();
+                    LoadBackupConfiguration();
                 }
             }
         }
@@ -256,6 +369,7 @@ namespace LanceurRaccourcis
                     backupEntries[entryIndex] = editForm.BackupEntry;
                     RefreshGrid();
                     SaveBackupConfiguration();
+                    LoadBackupConfiguration();
                 }
             }
         }
@@ -298,6 +412,7 @@ namespace LanceurRaccourcis
 
                 RefreshGrid();
                 SaveBackupConfiguration();
+                LoadBackupConfiguration();
             }
         }
 
@@ -328,19 +443,7 @@ namespace LanceurRaccourcis
             MessageBox.Show("Fonctionnalité Paramètres à implémenter",
                 "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-        private void OnSchedule(object? sender, EventArgs e)
-        {
-            MessageBox.Show("Fonctionnalité Planification à implémenter",
-                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void OnRestore(object? sender, EventArgs e)
-        {
-            MessageBox.Show("Fonctionnalité Restaurer à implémenter",
-                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
+        
         private void OnCellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.RowIndex >= dgvBackups.Rows.Count) return;
@@ -367,18 +470,21 @@ namespace LanceurRaccourcis
 
         private void ExecuteBackup(BackupEntry entry, bool showmessagebox = false)
         {
+            entry.Error = false;
             try
             {
-                if (!File.Exists(entry.SourcePath) && !Directory.Exists(entry.SourcePath))
+                if (entry.ActionType != "WEB" && !File.Exists(entry.SourcePath) && !Directory.Exists(entry.SourcePath))
                 {
                     entry.Error = true;
-                    MessageBox.Show($"Le fichier source n'existe pas:\n{entry.SourcePath}",
-                        "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    SaveBackupConfiguration();
-                    RefreshGrid();
+                    if(showmessagebox)
+                    {
+                        MessageBox.Show($"Le fichier source n'existe pas:\n{entry.SourcePath}",
+                            "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    SaveBackupConfigurationAsync();
                     return;
                 }
-
+ 
                 if (entry.ActionType == "EXECUTER")
                 {
                     // Pour EXECUTER, on lance simplement le programme
@@ -389,14 +495,34 @@ namespace LanceurRaccourcis
                     });
 
                     entry.LastBackupDate = DateTime.Now;
-                    SaveBackupConfiguration();
-                    RefreshGrid();
+                    SaveBackupConfigurationAsync();
 
                     string sourceFileNameexe = Path.GetFileName(entry.SourcePath);
                     Logger.Log($"Programme exécuté avec succès:\n{sourceFileNameexe}");
                     if(showmessagebox)
                     {                    
                         MessageBox.Show($"Programme exécuté avec succès:\n{sourceFileNameexe}",
+                            "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    return;
+                }
+
+                if (entry.ActionType == "WEB")
+                {
+                    // Pour WEB, on ouvre l'URL dans le navigateur par défaut
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = entry.SourcePath,
+                        UseShellExecute = true
+                    });
+
+                    entry.LastBackupDate = DateTime.Now;
+                    SaveBackupConfigurationAsync();
+
+                    Logger.Log($"Page web ouverte avec succès:\n{entry.SourcePath}");
+                    if(showmessagebox)
+                    {                    
+                        MessageBox.Show($"Page web ouverte avec succès:\n{entry.SourcePath}",
                             "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     return;
@@ -483,8 +609,7 @@ namespace LanceurRaccourcis
                 }
 
                 entry.LastBackupDate = DateTime.Now;
-                SaveBackupConfiguration();
-                RefreshGrid();
+                SaveBackupConfigurationAsync();
 
                 string sourceFileName = Path.GetFileName(entry.SourcePath);
                 string actionText = entry.ActionType == "ZIP" ? "compressée" : "copiée";
@@ -499,8 +624,7 @@ namespace LanceurRaccourcis
             catch (Exception ex)
             {
                 entry.Error = true;
-                SaveBackupConfiguration();
-                RefreshGrid();
+                SaveBackupConfigurationAsync();
                  Logger.LogError($"Erreur lors de la sauvegarde:\n{ex.Message}", ex);
                 if(showmessagebox)
                 {
@@ -510,20 +634,67 @@ namespace LanceurRaccourcis
             }
         }
 
+        private void SaveBackupConfigurationAsync()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    SaveBackupConfiguration();
+                    RefreshGrid();
+                }));
+            }
+            else
+            {
+                SaveBackupConfiguration();
+                RefreshGrid();
+                LoadBackupConfiguration();
+            }
+        }
+
         private void CopyDirectory(string sourceDir, string destDir)
         {
-            Directory.CreateDirectory(destDir);
-
-            foreach (string file in Directory.GetFiles(sourceDir))
+            try
             {
-                string destFile = Path.Combine(destDir, Path.GetFileName(file));
-                File.Copy(file, destFile, true);
+                Directory.CreateDirectory(destDir);                
+
+                foreach (string file in Directory.GetFiles(sourceDir))
+                {
+                    try
+                    {
+                        string destFile = Path.Combine(destDir, Path.GetFileName(file));
+                        File.Copy(file, destFile, true);
+                    }catch (UnauthorizedAccessException)
+                    {
+                        Logger.Log($"Accès refusé au fichier: {file}");
+                    }
+                    catch (IOException ex)
+                    {
+                        Logger.Log($"Erreur lors de la copie du fichier {file}: {ex.Message}");
+                    }
+                }
+
+                foreach (string dir in Directory.GetDirectories(sourceDir))
+                {
+                    try
+                    {
+                        string destSubDir = Path.Combine(destDir, Path.GetFileName(dir));
+                        CopyDirectory(dir, destSubDir);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        Logger.Log($"Accès refusé au répertoire: {dir}");
+                    }
+                    catch (IOException ex)
+                    {
+                        Logger.Log($"Erreur lors de la copie du répertoire {dir}: {ex.Message}");
+                    }
+                }
             }
-
-            foreach (string dir in Directory.GetDirectories(sourceDir))
+            catch (Exception ex)
             {
-                string destSubDir = Path.Combine(destDir, Path.GetFileName(dir));
-                CopyDirectory(dir, destSubDir);
+                Logger.LogError($"Erreur lors de la copie du répertoire {sourceDir}", ex);
+                throw; // Propager l'erreur pour qu'elle soit capturée par ExecuteBackup
             }
         }
 
@@ -531,9 +702,13 @@ namespace LanceurRaccourcis
         {
             autoSaveTimer = new System.Windows.Forms.Timer
             {
-                Interval = 60000 // Vérifier toutes les minutes
+                Interval = 10000 // Vérifier toutes les minutes
             };
             autoSaveTimer.Tick += AutoSaveTimer_Tick;
+            
+            // Exécuter immédiatement
+            AutoSaveTimer_Tick(autoSaveTimer, EventArgs.Empty);
+
             autoSaveTimer.Start();
         }
 
@@ -544,7 +719,20 @@ namespace LanceurRaccourcis
             {
                 if (ShouldExecuteBackup(entry, now))
                 {
-                    ExecuteBackup(entry, false);
+                    var currentEntry = entry;
+            
+                    _ = Task.Run(() => 
+                    {
+                        try
+                        {
+                            ExecuteBackup(currentEntry, false);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Logger l'erreur ou notifier l'utilisateur
+                            Console.WriteLine($"Erreur lors de la sauvegarde: {ex.Message}");
+                        }
+                    });
                 }
             }
         }
@@ -560,7 +748,7 @@ namespace LanceurRaccourcis
             double totalIntervalMinutes = (entry.DayInterval * 24 * 60) + 
                         (entry.HourInterval * 60) + entry.MinuteInterval;
 
-            if (daysPassed < totalIntervalMinutes && entry.Error == true)
+            if (daysPassed < totalIntervalMinutes && entry.Error == false)
                 return false;
 
             return true;
@@ -673,6 +861,7 @@ namespace LanceurRaccourcis
         private Button btnBrowseSourceFolder = null!;
         private Button btnBrowseDestFile = null!;
         private Button btnBrowseDestFolder = null!;
+        GroupBox grpSource = null!;
         private GroupBox grpDest = null!;
         private GroupBox grpDuration = null!;
         private Button btnOk = null!;
@@ -713,13 +902,13 @@ namespace LanceurRaccourcis
             // Action
             Label lblAction = new Label { Text = "Action :", Left = 20, Top = y, Width = 80 };
             cboAction = new ComboBox { Left = 110, Top = y - 3, Width = 180, DropDownStyle = ComboBoxStyle.DropDownList };
-            cboAction.Items.AddRange(new[] { "COPIE", "ZIP", "EXECUTER" });
+            cboAction.Items.AddRange(new[] { "COPIE", "ZIP", "EXECUTER", "WEB" });
             cboAction.SelectedIndex = 0;
             cboAction.SelectedIndexChanged += CboAction_SelectedIndexChanged;
             y += 35;
 
             // GroupBox - Fichier origine
-            GroupBox grpSource = new GroupBox { Text = "Fichier origine :", Left = 10, Top = y, Width = 345, Height = 95 };
+            grpSource = new GroupBox { Text = "Fichier origine :", Left = 10, Top = y, Width = 345, Height = 95 };
             txtSourceFile = new TextBox { Left = 10, Top = 25, Width = 270, Parent = grpSource };
             btnBrowseSourceFolder = new Button { Text = "Répertoire", Left = 10, Top = 55, Width = 100, Parent = grpSource };
             btnBrowseSourceFile = new Button { Text = "Fichier", Left = 170, Top = 55, Width = 100, Parent = grpSource };
@@ -773,7 +962,7 @@ namespace LanceurRaccourcis
         private void CboAction_SelectedIndexChanged(object? sender, EventArgs e)
         {
             string selectedAction = cboAction.SelectedItem?.ToString() ?? "COPIE";
-            bool isExecute = selectedAction == "EXECUTER";
+            bool isExecute = selectedAction == "EXECUTER" || selectedAction == "WEB";
             
             // Pour EXECUTER, on cache les options de destination
             txtDestination.Visible = !isExecute;
@@ -789,6 +978,13 @@ namespace LanceurRaccourcis
             btnCancel.Top = btnOk.Top;
 
             this.Size = new Size(380, grpDuration.Bottom + 80);
+
+            if(selectedAction == "WEB")
+            {
+                grpSource.Text = "URL à ouvrir :";
+                btnBrowseSourceFolder.Visible = false;
+                btnBrowseSourceFile.Visible = false;
+            }
 
             if (isExecute)
             {
